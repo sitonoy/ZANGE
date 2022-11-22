@@ -1,0 +1,28 @@
+{% extends "ZANGEapp/base.html" %}
+{% load mathfilters %}
+{% load humanize %}
+
+{% block title %}
+ZANGE【株式分析】
+{% endblock %}
+
+{% block content %}
+<!-- コンテンツの作成 -->
+<main role="main" class="inner cover">
+
+  <div class="container">
+    <div class="row">
+      <h1 class="cover-heading">企業名を入力してください。</h1>
+      <p class="lead">Search for EDINET using API.</p>
+      <div class="col-md-8">
+        <form action="{% url 'call_edinet_api' %}" method="GET">
+          <br>
+          {{ form.as_p }}
+          <hr>
+          <input type="submit" name="start_button">
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

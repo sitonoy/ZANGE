@@ -1,0 +1,41 @@
+{% extends "ZANGEapp/base.html" %}
+
+{% block content %}
+<h1 class='massage'>Create new values<br></h1>
+<main class='mainabout'>
+
+  <!-- bootstrapからカルーセルコピー -->
+  <div class="card-group">
+    <div class="card">
+      <img src="../static/css/manufacture.png" class="card-img-top" alt="製造">
+      <div class="card-body">
+        <h5 class="card-title">Manufacturing</h5>
+        <p class="card-text">製造現場における不具合発生予測や生産台数の増減予想</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="../static/css/retail.jpeg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Retail</h5>
+        <p class="card-text">過去の売上推移から需要予測</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="../static/css/investment.jpeg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Investment</h5>
+        <p class="card-text">機械学習を用いた株式やFXの推移予想</p>
+      </div>
+    </div>
+  </div>
+  <!-- bootstrapからカルーセルコピー -->
+
+
+  <!-- 検索トップ -->
+  <section id="search">
+    <a href="{% url 'index' %}">
+      <button type="button" class="btn btn-outline-secondary">戻る</button>
+    </a>
+  </section>
+</main>
+{% endblock %}

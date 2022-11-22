@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+
+
+body{
+  margin-left: auto;
+  margin-right: auto;
+  background:rgb(214, 211, 211);
+}
+
+header{
+  position: relative;
+  z-index: 2; /*必ず必要*/
+  width: auto;
+}
+
+footer{
+  background:rgb(255, 255, 255);
+  padding: 100px 100px;
+}
+
+#create {
+  position: relative; /*必ず必要*/
+  z-index: 2; /*必ず必要*/
+  /* テキストは白色 */
+  color: white;
+  font-style:oblique;
+  /* 高さを auto に指定 */
+  height: auto;
+  /* 文字サイズの変換 */
+  font-size: large;
+  text-align: center;
+  padding: 100px;
+  display:flex;
+}
+
+.title{
+  border-width: 10px;
+  border-style: solid;
+  border-color: rgb(162, 134, 199);
+  margin: 0px auto;
+  padding: 50px;
+  width: auto;
+}
+
+.post{
+  margin-right: 500px;
+}
+
+.wrap{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  height:auto;
+  width: auto;
+  object-fit: cover;
+  object-position: 0px;
+  z-index: -100;
+    /* 背景画像を設定 */
+  background-size: cover;
+  inset: 0px;
+  max-width: none;
+  max-height: none;
+  visibility: visible;
+  z-index: -1;
+  background-position: 50% 50%;
+}
+
+.list{
+  margin: 200px 100px;
+}
+
+h3{
+  border-bottom:2px solid black;
+}
+
+footer{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:50px;
+}
+.column1{
+  width:50%
+}
+.column2{
+  width:50%
+}
+
+.detail{
+  margin:0 0 0 auto;
+}
+
+.massage{
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1.7rem;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: rgb(162, 134, 199);
+  color: aliceblue;
+  margin-bottom: 10px;
+}
+
+.mainabout{
+  margin-left: 200px;
+  margin-right: 200px;
+ 
+}

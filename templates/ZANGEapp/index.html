@@ -1,0 +1,41 @@
+{% extends "ZANGEapp/base.html" %}
+
+{% block title %}
+ZANGE【ホーム】
+{% endblock %}
+
+{% block content %}
+<!-- コンテンツの作成 -->
+<main>
+  <!-- 検索トップ -->
+  <section id="create">
+    <div class='title'>
+      <h2>Be a Data Scientist<br></h2>
+      <a href="{% url 'post' %}">
+        <button type="button" class="btn btn-light btn-sm">Share info</button>
+      </a>
+      <p> </p>
+      <p>ノウハウ共有プラットフォームへようこそ</p>
+    </div>
+    <div class='wrap'>
+      <video src="../static/css/PexelsVideos3534.mp4" autoplay loop muted playinline>
+        <img src="../static/css/IMG_5363.JPG" alt="写真">
+      </video>
+    </div>
+  </section>
+  <section class='list'>
+    <h3>Latest infomation</h3>
+    {% for item in object_list %}
+    <ul>
+      <li>{{item.date}}　/タイトル：{{item.title}} 　/参考リンク:<a href="{{item.url}}">{{item.url}}</a>
+        <a href="{%url 'detail' item.pk %}" class=detail>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-outline-dark">詳細</button>
+          </div>
+        </a>
+      </li>
+    </ul>
+    {%endfor%}
+  </section>
+</main>
+{% endblock %}

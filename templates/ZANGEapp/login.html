@@ -1,0 +1,26 @@
+{% extends "ZANGEapp/base.html" %}
+
+{% block content %}
+<!-- 認証失敗時の警告文 -->
+{% if form.errors %}
+<p>ログインIDもしくはパスワードが異なります。</p>
+<p>もう一度入力してください。</p>
+
+{% endif %}
+<main>
+  <div class="container" style="margin-top: 30px;">
+    <form method="POST">{% csrf_token %}
+      <div id="username">
+        {{ form.username }}
+      </div>
+      <div id="password">
+        {{ form.password }}
+      </div>
+      <div style="margin-top: 20px;">
+        <button id="send-login" type="submit" value="login" class="btn btn-primary">Login</button>
+        <a href="/signup"><button type="button" class="btn btn-primary" style="margin-left:10px">Sign-Up</button></a>
+      </div>
+    </form>
+  </div>
+</main>
+{% endblock %}

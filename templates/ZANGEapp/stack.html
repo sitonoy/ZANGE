@@ -1,0 +1,36 @@
+{% extends "ZANGEapp/base.html" %}
+{% load mathfilters %}
+{% load humanize %}
+
+{% block title %}
+ZANGE【株式分析】
+{% endblock %}
+
+{% block content %}
+<!-- コンテンツの作成 -->
+<main role="main" class="inner cover">
+  <h1 class="cover-heading">Call Edinet API.</h1>
+  <p class="lead">This is My Django Practice.</p>
+
+  <h2>会社名：{{name}}({{code}})の財務状況</h2>
+
+  <table border="1">
+    <tr>
+      <td>売上高(百万円)</td>
+      <td>{{sales|div:1000000|floatformat|intcomma}}</td>
+    </tr>
+    <tr>
+      <td>営業利益(百万円)</td>
+      <td>{{profit|div:1000000|floatformat|intcomma}}</td>
+    </tr>
+    <tr>
+      <td>営業利益率(%)</td>
+      <td>{{profit|div:sales|mul:100|floatformat}}</td>
+    </tr>
+  </table>
+  <p> </p>
+  <p class="lead">
+    <a href="{% url 'index' %}" class="btn btn-lg btn-secondary">Back to HOME</a>
+  </p>
+</main>
+{% endblock %}
