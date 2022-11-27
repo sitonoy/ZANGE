@@ -8,7 +8,10 @@ class ZangeModel(models.Model):
   text = models.TextField('コンテンツ')
   id = models.AutoField(primary_key=True)
   url = models.URLField('URL',null=True)
-
+ 
   def __str__(self):
     return self.title
 
+class ModelFile(models.Model):
+  image = models.ImageField(upload_to='media/documents/')
+ 

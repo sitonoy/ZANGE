@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import InputForm, LoginForm, SignUpForm, ContactForm, EdinetName
+from .forms import InputForm, LoginForm, SignUpForm, EdinetName, ImageForm
 from . import forms
 from .models import ZangeModel
 from django.contrib.auth.views import LoginView,LogoutView
@@ -29,6 +29,16 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 import glob
 import csv
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision
+from torchvision import transforms
+import torchmetrics
+from torchmetrics.functional import accuracy
+import joblib
+from model import predict
+from PIL import Image
 
  
 
@@ -99,24 +109,6 @@ def about(request):
 def link(request):
     return render(request,'ZANGEapp/link.html')
 
-class ContactFormView(FormView):
-    template_name = 'ZANGEapp/contact_form.html'
-    form_class = ContactForm
-    success_url = reverse_lazy('contact_result')
-
-    def form_valid(self, form):
-        form.send_email()
-        return super().form_valid(form)
-
-class ContactResultView(TemplateView):
-    template_name = 'ZANGEapp/contact_result.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['success'] = "お問い合わせは正常に送信されました。"
-        return context
-
-
 #EDINETから指定のEDINETコードでP/Lの売上と営業利益を取得
 
 list_api = "https://disclosure.edinet-fsa.go.jp/api/v1/documents.json?date={target}&type=2"
@@ -136,12 +128,19 @@ def call_edinet_api(request):
       name = '入っていないよ'
     #コードリストの読み込み
     df = pd.read_csv('../ZANGEproject/EdinetcodeDlInfo_utf8.csv')
-    df = df[df['提出者名'] == name]
-    code = df['ＥＤＩＮＥＴコード'].values
-    code = pd.Series(code)
-    code = code[0]
-    print(name)
-    print(code)
+    if name in df['提出者名'].values:
+      df = df[df['提出者名'] == name]
+      code = df['ＥＤＩＮＥＴコード'].values
+      code = pd.Series(code)
+      code = code[0]
+      print(name)
+      print(code)
+    else:
+      retry = 'は企業リストにありませんでした。'
+      form = EdinetName()
+      return render(request, 'ZANGEapp/search.html', {'name':name, 'retry':retry,'form':form})
+
+
     print(os.getcwd())
     for result in get_results("2018-06-19"):
         if result["edinetCode"] == "E01777" and "有価証券" in result["docDescription"]:
@@ -284,3 +283,33 @@ def get_edinet_code_list():
 
     cp932_file.close()
     utf8_file.close()
+
+def image_upload(request):
+  
+  if request.method == 'POST':
+    form = ImageForm(request.POST, request.FILES)
+    
+    if form.is_valid():
+      form.save()
+      image_name = request.FILES['image']
+      
+      image_url = 'media/documents/{}'.format(image_name)
+      print(image_url)
+      image_ = Image.open(image_url)
+      x = predict.transform(image_)
+      net = predict.Net()
+      net.load_state_dict(torch.load("model/model.pt",map_location=torch.device("cpu")))
+      net.eval()
+      y = net(x.unsqueeze(0))
+      y = F.softmax(y)
+      y_2 = torch.argmax(y)
+      y_2 = y_2.detach().clone().numpy()
+      print(y)
+      print(y[0])
+      y_1 = y[0][y_2].detach().clone().numpy()
+      y_1 = y_1 * 100
+      y_1 = round(y_1,1)
+      return render(request,"ZANGEapp/faceshape_result.html",{"y":y_2,"y_proba":y_1})
+  else:
+    form = ImageForm()
+    return render(request,"ZANGEapp/faceshape.html",{"form":form})

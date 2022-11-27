@@ -1,0 +1,16 @@
+{% extends "ZANGEapp/base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h1>眼鏡レコメンドモデル</h1>
+      <p>顔写真を添付してください。</p>
+      <form method="POST" , class="form" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success" style="margin-top:20px;" id="inference">SEND</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

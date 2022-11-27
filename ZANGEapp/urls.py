@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import ContactFormView, ContactResultView
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -12,8 +13,9 @@ urlpatterns = [
   path('detail/<int:pk>/',views.detail,name='detail'),
   path('about/',views.about,name='about'),
   path('link/',views.link,name='link'),
-  path('contact/', ContactFormView.as_view(), name='contact_form'),
-  path('contact/result/', ContactResultView.as_view(), name='contact_result'),
+  path('faceshape/', views.image_upload, name='faceshape'),
   path('stack/', views.edinet_search, name='edinet_search'),
   path('result/',views.call_edinet_api,name='call_edinet_api'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

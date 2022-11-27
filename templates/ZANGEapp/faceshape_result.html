@@ -1,0 +1,26 @@
+{% extends "ZANGEapp/base.html" %}
+
+{% block title %}
+Result
+{% endblock %}
+
+
+{% block content %}
+
+<div id="result">
+
+  <p>結果: あなたは{{y_proba}}%の確率で、</p>
+  <h2>{% if y == 0 %}三角顔です。</h2>
+  <p>「ラウンド、オーバル、ボストン」がおすすめです。</p>
+  <h2>{% else %}丸顔です。</h2>
+  <p>「スクエア、ハーフリム」がおすすめです。{% endif %}</p>
+</div>
+
+<a href="{% url 'faceshape' %}">
+  <button type="button"> リトライ</button>
+</a>
+
+
+</div>
+
+{% endblock %}
